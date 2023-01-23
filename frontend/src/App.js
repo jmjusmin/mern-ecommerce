@@ -1,6 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
+  HeaderComponent,
+  FooterComponent,
+  ProtectedRoutesComponent,
+  RoutesWithUserChatComponent,
+} from "./components";
+import {
   CartPage,
   HomePage,
   LoginPage,
@@ -21,21 +27,23 @@ import {
   AdminProductsPage,
   AdminUserPage,
 } from "./pages";
-import ProtectedRoutesComponent from "./components/ProtectedRoutesComponent";
 
 function App() {
   return (
     <Router>
+      <HeaderComponent />
       <Routes>
-        {/* public pages */}
-        <Route exact path="/" element={<HomePage />} />
-        <Route path="/product-list" element={<ProductListPage />} />
-        <Route path="/product-details" element={<ProductDetailsPage />} />
-        <Route path="/product-details/:id" element={<ProductDetailsPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={"Page not exist 404"} />
+        <Route element={<RoutesWithUserChatComponent />}>
+          {/* public pages */}
+          <Route exact path="/" element={<HomePage />} />
+          <Route path="/product-list" element={<ProductListPage />} />
+          <Route path="/product-details" element={<ProductDetailsPage />} />
+          <Route path="/product-details/:id" element={<ProductDetailsPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={"Page not exist 404"} />
+        </Route>
 
         {/* user pages */}
         <Route element={<ProtectedRoutesComponent admin={false} />}>
@@ -70,6 +78,7 @@ function App() {
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
         </Route>
       </Routes>
+      <FooterComponent />
     </Router>
   );
 }
